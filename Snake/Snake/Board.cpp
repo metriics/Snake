@@ -1,18 +1,31 @@
+/*
+Snake
+
+Stephane Gagnon		100694227
+Charley Fai			100698666
+Ryan Burton			100707511
+Jonah Griffin		100702748
+Kennedy Adams		100632983
+*/
+
 #include "Board.h"
 #include <iostream>
 using namespace std;
 
 Board::Board() {
-
+	int fps = 2;
+	this->timing = 1000 / fps;
 }
 
 Board::Board(string test) {
+	int fps = 2;
+	this->timing = 1000 / fps;
 	if (test == "test") {
 		cout << "Press enter to test." << endl;
 		cin.get();
 
 		vec2 bpos(50, 50); // broken pos to test error msg
-		vec2 opos(15, 15); // ok pos to test placement
+		vec2 opos(1, 15); // ok pos to test placement
 
 		this->updateBoard(); // print
 		cout << "Press enter to place OK test char and print" << endl;
@@ -27,18 +40,33 @@ Board::Board(string test) {
 }
 
 void Board::placeOnBoard(char obj, vec2 pos) {
-	if ((int)pos.x == 0 || (int)pos.x > 28) {
-		MessageBox(nullptr, TEXT("OUT OF BOUNDS PLACEMENT"), TEXT("A character was placed out of bounds."), MB_OK);
+	vec2 temp(pos.y, pos.x);
+	if (curBoard[(int)temp.y][(int)temp.x] == '|' || '-' || '*') {
+		deathScreen();
 	}
+
+	/*if ((int)temp.x <= 0 || (int)temp.x > 48) { // check if out of x axis bounds
+		if (obj == '@') {
+			deathScreen();
+		}
+		MessageBox(nullptr, TEXT("A character was placed out of bounds on the x axis."), TEXT("OUT OF BOUNDS PLACEMENT"), MB_OK);
+	}
+	if ((int)temp.y <= 0 || (int)temp.y > 28) { // check if out of y axis bounds
+		MessageBox(nullptr, TEXT("A character was placed out of bounds on the y axis."), TEXT("OUT OF BOUNDS PLACEMENT"), MB_OK);
+	}
+
 	// add code here to check if snake head is replacing food OR 
 	// if its replacing a - or a | (pass snake through to the other side instad
+	if (obj == '@' || obj == '*') {
 
-	this->curBoard[(int)pos.x][(int)pos.y] = obj; // replace char on board at pos with char obj
+	}*/
+
+	this->curBoard[(int)temp.x][(int)temp.y] = obj; // replace char on board at pos with char obj
 }
 
 void Board::clearBoard() {
 	for (int i = 0; i < 30; i++) {
-		for (int j = 0; j < 30; j++) {
+		for (int j = 0; j < 50; j++) {
 			curBoard[i][j] = emptyBoard[i][j];
 		}
 	}
@@ -47,7 +75,7 @@ void Board::clearBoard() {
 
 void Board::printBoard() {
 	for (int i = 0; i < 30; i++) {
-		for (int j = 0; j < 30; j++) {
+		for (int j = 0; j < 50; j++) {
 			cout << this->curBoard[i][j];
 		}
 		cout << endl;
@@ -57,15 +85,27 @@ void Board::printBoard() {
 
 void Board::updateBoard() {
 	Board::printBoard();
-	Sleep(5000);
+	Sleep(this->timing);
 	Board::clearBoard();
 }
 
-void Board::resetBoard(char newBoard[30][30])
-{
-	for (int i = 0; i < 30; i++) {
-		for (int j = 0; j < 30; j++) {
-			curBoard[i][j] = newBoard[i][j];
-		}
-	}
+void Board::deathScreen() {
+	std::cout << "                                                                                " << std::endl;
+	std::cout << "  |||||||||| |||||||||| |||    ||| ||||||||||                                   " << std::endl;
+	std::cout << "  |||        |||    ||| ||||  |||| |||                                          " << std::endl;
+	std::cout << "  |||  ||||| |||||||||| ||| || ||| ||||||                                       " << std::endl;
+	std::cout << "  |||    ||| |||    ||| |||    ||| |||                                          " << std::endl;
+	std::cout << "  |||||||||| |||    ||| |||    ||| ||||||||||                                   " << std::endl;
+	std::cout << "                                                                                " << std::endl;
+	std::cout << "                                                                                " << std::endl;
+	std::cout << "                  |||||||||| |||    ||| |||||||||| ||||||||||    |||    |||     " << std::endl;
+	std::cout << "                  |||    |||  |||  |||  |||        |||    |||         |||       " << std::endl;
+	std::cout << "                  |||    |||   ||  ||   ||||||     ||||||||||         ||        " << std::endl;
+	std::cout << "                  |||    |||    ||||    |||        |||  |||           |||       " << std::endl;
+	std::cout << "                  ||||||||||     ||     |||||||||| |||    |||    |||    |||     " << std::endl;
+	std::cout << "                                                                                " << std::endl;
+	std::cout << endl;
+	std::cout << "Press enter to quit..." << endl;
+	cin.get();
+	exit(0);
 }
