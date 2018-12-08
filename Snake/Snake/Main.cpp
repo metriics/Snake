@@ -23,57 +23,57 @@ Kennedy Adams		100632983
 #define KEY_D 68
 using namespace std;
 
+bool playing = true;
+string choice;
+bool keys[5] = { false, false, false, false, false };
+			//	UP		DOWN	LEFT	RIGHT	ESC
+int c;
+
+void askToQuit() {
+	cout << "Enter r to resume, or q to quit." << endl;
+	cin >> choice;
+	if (choice == "q") {
+		exit(0);
+	}
+	else if (choice == "r") {
+		return;
+	}
+}
 
 int main() {
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r);
-	MoveWindow(console, r.left, r.top, 1000, 650, TRUE); // set console exactly 38 lines in height
+	MoveWindow(console, r.left, r.top, 800, 600, TRUE); 
 
 	Board game;
 
-	// Board gameBoard("test");
-	int c = 0;
-	while (true)
+	Board gameBoard("test");
+
+	while (playing)
 	{
 		c = 0;
 		switch ((c = _getch())) {
 		case KEY_UP:
 			cout << endl << "Up" << endl; //key up
-			system("CLS");
+			keys[1] = true;
 			break;
 		case KEY_DOWN:
 			cout << endl << "Down" << endl; // key down
-			system("CLS");
+			keys[2] = true;
 			break;
 		case KEY_LEFT:
 			cout << endl << "Left" << endl; // key left
-			system("CLS");
+			keys[3] = true;
 			break;
 		case KEY_RIGHT:
 			cout << endl << "Right" << endl; // key right
-			system("CLS");
-			break;
-		case KEY_W:
-			cout << endl << "W" << endl; // key w
-			system("CLS");
-			break;
-		case KEY_A:
-			cout << endl << "A" << endl; // key a
-			system("CLS");
-			break;
-		case KEY_S:
-			cout << endl << "S" << endl; // key s
-			system("CLS");
-			break;
-		case KEY_D:
-			cout << endl << "D" << endl; // key d
-			system("CLS");
+			keys[4] = true;
 			break;
 		case KEY_ESC:
 			cout << endl << "ESC" << endl; // key esc
-			system("CLS");
-			exit(0);
+			keys[5] = true;
+			askToQuit();
 			break;
 		}
 	}

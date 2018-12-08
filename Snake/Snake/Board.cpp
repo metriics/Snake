@@ -41,26 +41,13 @@ Board::Board(string test) {
 
 void Board::placeOnBoard(char obj, vec2 pos) {
 	vec2 temp(pos.y, pos.x);
-	if (curBoard[(int)temp.y][(int)temp.x] == '|' || '-' || '*') {
+	if (obj == '@' && (curBoard[(int)temp.y][(int)temp.x] == '|' || curBoard[(int)temp.y][(int)temp.x] == '-' || curBoard[(int)temp.y][(int)temp.x] == '*')) {
 		deathScreen();
 	}
 
-	/*if ((int)temp.x <= 0 || (int)temp.x > 48) { // check if out of x axis bounds
-		if (obj == '@') {
-			deathScreen();
-		}
-		MessageBox(nullptr, TEXT("A character was placed out of bounds on the x axis."), TEXT("OUT OF BOUNDS PLACEMENT"), MB_OK);
+	else if (obj == '#' && (curBoard[(int)temp.y][(int)temp.x] == '|' || curBoard[(int)temp.y][(int)temp.x] == '-' || curBoard[(int)temp.y][(int)temp.x] == '*')) {
+		MessageBox(nullptr, TEXT(""), TEXT("food spawn out of bounds"), MB_OK);
 	}
-	if ((int)temp.y <= 0 || (int)temp.y > 28) { // check if out of y axis bounds
-		MessageBox(nullptr, TEXT("A character was placed out of bounds on the y axis."), TEXT("OUT OF BOUNDS PLACEMENT"), MB_OK);
-	}
-
-	// add code here to check if snake head is replacing food OR 
-	// if its replacing a - or a | (pass snake through to the other side instad
-	if (obj == '@' || obj == '*') {
-
-	}*/
-
 	this->curBoard[(int)temp.x][(int)temp.y] = obj; // replace char on board at pos with char obj
 }
 
