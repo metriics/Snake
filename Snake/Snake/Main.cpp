@@ -12,15 +12,13 @@ Kennedy Adams		100632983
 #include <conio.h>
 #include <Windows.h>
 #include <iostream>
+
+#include "Food.h"
 #define KEY_UP 72
 #define KEY_DOWN 80
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
 #define KEY_ESC 27
-#define KEY_W 87
-#define KEY_A 65
-#define KEY_S 83
-#define KEY_D 68
 using namespace std;
 
 bool playing = true;
@@ -40,6 +38,10 @@ void askToQuit() {
 	}
 }
 
+void gameOver() {
+	exit(0);
+}
+
 int main() {
 	HWND console = GetConsoleWindow();
 	RECT r;
@@ -47,37 +49,59 @@ int main() {
 	MoveWindow(console, r.left, r.top, 800, 600, TRUE); 
 
 	Board game;
-
-	Board gameBoard("test");
+	//Board gameBoard("test");
+	Food foodList[3];
 
 	while (playing)
 	{
+		// GET KEYBOARD INPUT
 		c = 0;
-		switch ((c = _getch())) {
-		case KEY_UP:
-			cout << endl << "Up" << endl; //key up
+		c = _getch();
+		if (c == KEY_UP) {
 			keys[1] = true;
 			break;
-		case KEY_DOWN:
-			cout << endl << "Down" << endl; // key down
+		}
+		else if (c == KEY_DOWN) {
 			keys[2] = true;
 			break;
-		case KEY_LEFT:
-			cout << endl << "Left" << endl; // key left
+		}
+		else if (c == KEY_LEFT) {
 			keys[3] = true;
 			break;
-		case KEY_RIGHT:
-			cout << endl << "Right" << endl; // key right
+		}
+		else if (c == KEY_RIGHT) {
 			keys[4] = true;
 			break;
-		case KEY_ESC:
-			cout << endl << "ESC" << endl; // key esc
+		}
+		else if (c == KEY_ESC) {
 			keys[5] = true;
 			askToQuit();
 			break;
 		}
-	}
-	// Here we write Snake.
+		else {
+			
+		}
 
+		//
+		cout << "test" << endl;
+		// Randomly place Food on the board within borders, no more than 3 food pieces at once
+		for (int i = 0; i > 3; i++) {
+			if (game.curBoard[(int)foodList[i].pos.y][(int)foodList[i].pos.x] != '#') {
+				foodList[i] = Food();
+			}
+			game.placeOnBoard(foodList[i].food, foodList[i].pos);
+			cout << foodList[i].pos.x << " " << foodList[i].pos.y << endl;
+		}
+
+
+
+		// CHECK FOR SNAKE LENGTH
+		if (game.snake.len > 50) {
+			gameOver();
+		}
+		//
+
+
+	}
 	return 0;
 }

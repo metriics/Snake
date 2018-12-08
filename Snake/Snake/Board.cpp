@@ -24,7 +24,7 @@ Board::Board(string test) {
 		cout << "Press enter to test." << endl;
 		cin.get();
 
-		vec2 bpos(50, 50); // broken pos to test error msg
+		vec2 bpos(0, 0); // broken pos to test error msg
 		vec2 opos(1, 15); // ok pos to test placement
 
 		this->updateBoard(); // print
@@ -34,7 +34,7 @@ Board::Board(string test) {
 		this->updateBoard(); // print
 		cout << "Press enter to place BAD test char and print" << endl;
 		cin.get();
-		this->placeOnBoard('t', bpos); // place bad test char
+		this->placeOnBoard('#', bpos); // place bad test char
 		this->updateBoard(); // print
 	}
 }
@@ -48,7 +48,10 @@ void Board::placeOnBoard(char obj, vec2 pos) {
 	else if (obj == '#' && (curBoard[(int)temp.y][(int)temp.x] == '|' || curBoard[(int)temp.y][(int)temp.x] == '-' || curBoard[(int)temp.y][(int)temp.x] == '*')) {
 		MessageBox(nullptr, TEXT(""), TEXT("food spawn out of bounds"), MB_OK);
 	}
-	this->curBoard[(int)temp.x][(int)temp.y] = obj; // replace char on board at pos with char obj
+
+	else {
+		this->curBoard[(int)temp.x][(int)temp.y] = obj; // replace char on board at pos with char obj
+	}
 }
 
 void Board::clearBoard() {
