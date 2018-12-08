@@ -9,16 +9,16 @@ Kennedy Adams		100632983
 */
 
 #include "Food.h"
-#include <time.h>
+#include <iostream>
 #include <stdlib.h>
 
 Food::Food() {
-	srand((int)time(0));
+
 	vec2 temp;
 	for (int i = 0; i < 2; i++) {
 		int x = rand() % 49 + 1;
 		int y = rand() % 29 + 1;
-
+		//std::cout << x << " " << y << std::endl;
 		temp.x = x;
 		temp.y = y;
 	}

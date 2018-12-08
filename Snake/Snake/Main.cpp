@@ -12,8 +12,10 @@ Kennedy Adams		100632983
 #include <conio.h>
 #include <Windows.h>
 #include <iostream>
-
+#include <time.h>
+#include <stdlib.h>
 #include "Food.h"
+
 #define KEY_UP 72
 #define KEY_DOWN 80
 #define KEY_LEFT 75
@@ -42,7 +44,13 @@ void gameOver() {
 	exit(0);
 }
 
+void input()
+{
+
+}
+
 int main() {
+	srand((int)time(0));
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r);
@@ -55,53 +63,62 @@ int main() {
 	while (playing)
 	{
 		// GET KEYBOARD INPUT
-		c = 0;
-		c = _getch();
-		if (c == KEY_UP) {
-			keys[1] = true;
-			break;
-		}
-		else if (c == KEY_DOWN) {
-			keys[2] = true;
-			break;
-		}
-		else if (c == KEY_LEFT) {
-			keys[3] = true;
-			break;
-		}
-		else if (c == KEY_RIGHT) {
-			keys[4] = true;
-			break;
-		}
-		else if (c == KEY_ESC) {
-			keys[5] = true;
-			askToQuit();
-			break;
-		}
-		else {
-			
-		}
+	
+		if (_kbhit())
+		{
+			c = 0;
 
-		//
-		cout << "test" << endl;
-		// Randomly place Food on the board within borders, no more than 3 food pieces at once
-		for (int i = 0; i > 3; i++) {
-			if (game.curBoard[(int)foodList[i].pos.y][(int)foodList[i].pos.x] != '#') {
-				foodList[i] = Food();
+			switch (c = _getch())
+			{
+			case KEY_UP:
+				keys[1] = true;
+				break;
+
+			case KEY_DOWN:
+				keys[2] = true;
+				break;
+
+			case KEY_LEFT:
+				keys[3] = true;
+				cout << "left" << endl;
+				break;
+
+			case KEY_RIGHT:
+				keys[4] = true;
+				cout << "right" << endl;
+				break;
+
+			case KEY_ESC:
+				keys[5] = true;
+
+				askToQuit();
+				break;
+
+				cout << "test" << endl;
 			}
-			game.placeOnBoard(foodList[i].food, foodList[i].pos);
-			cout << foodList[i].pos.x << " " << foodList[i].pos.y << endl;
+
 		}
+		Sleep(500);
+			//
+			//cout << "test" << endl;
+			// Randomly place Food on the board within borders, no more than 3 food pieces at once
+			for (int i = 0; i < 3; i++) {
+				if (game.curBoard[(int)foodList[i].pos.y][(int)foodList[i].pos.x] != '#') {
+					foodList[i] = Food();
+				}
+				game.placeOnBoard(foodList[i].food, foodList[i].pos);
+				cout << foodList[i].pos.x << " " << foodList[i].pos.y << endl;
+			}
 
 
 
-		// CHECK FOR SNAKE LENGTH
-		if (game.snake.len > 50) {
-			gameOver();
-		}
-		//
+			// CHECK FOR SNAKE LENGTH
+			if (game.snake.len > 50) {
+				gameOver();
+			}
+			//
 
-
+		
 	}
 	return 0;
 }
