@@ -11,14 +11,14 @@ Kennedy Adams		100632983
 #include "Snake.h"
 
 Snake::Snake() {
-	this->dir = 1;
-	this->len = 1;
-	this->pos = vec2(14, 14);
+	this->dir = 3;
+	this->len = 0;
+	this->pos = vec2(24, 14);
 }
 
 Snake::Snake(vec2 pos) {
-	this->dir = 1;
-	this->len = 1;
+	this->dir = 3;
+	this->len = 0;
 	this->pos = pos;
 }
 

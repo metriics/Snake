@@ -16,8 +16,8 @@ public:
 	int dir; // 1 = up, 2 = right, 3 = down, 4 = left.
 	int len;
 	vec2 pos;
+	vec2 prevPos;
 	char head = '@';
-	char body = '*';
 
 	Snake();
 	Snake(vec2 pos);

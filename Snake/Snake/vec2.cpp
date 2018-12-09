@@ -70,6 +70,16 @@ vec2 vec2::operator/(const vec2 a) const {
 	return sum;
 }
 
+bool vec2::operator==(const vec2 a) const
+{
+	if (x == a.x && y == a.y) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 vec2 operator+(const float a, const vec2 b) {
 	vec2 temp;
 	temp.x = a + b.x;

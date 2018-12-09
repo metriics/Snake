@@ -12,9 +12,11 @@ Kennedy Adams		100632983
 #include <iostream>
 using namespace std;
 
+
 Board::Board() {
 	int fps = 2;
 	this->timing = 1000 / fps;
+	
 }
 
 Board::Board(string test) {
@@ -40,13 +42,19 @@ Board::Board(string test) {
 }
 
 void Board::placeOnBoard(char obj, vec2 pos) {
+	score = 0;
 	vec2 temp(pos.y, pos.x);
-	if (obj == '@' && (curBoard[(int)temp.y][(int)temp.x] == '|' || curBoard[(int)temp.y][(int)temp.x] == '-' || curBoard[(int)temp.y][(int)temp.x] == '*')) {
+	if (obj == '@' && (curBoard[(int)temp.x][(int)temp.y] == '|' || curBoard[(int)temp.x][(int)temp.y] == '-' || curBoard[(int)temp.x][(int)temp.y] == '*')) {
 		deathScreen();
 	}
 
-	else if (obj == '#' && (curBoard[(int)temp.y][(int)temp.x] == '|' || curBoard[(int)temp.y][(int)temp.x] == '-' || curBoard[(int)temp.y][(int)temp.x] == '*')) {
-		MessageBox(nullptr, TEXT(""), TEXT("food spawn out of bounds"), MB_OK);
+	else if (obj == '@' && curBoard[(int)temp.x][(int)temp.y] == '#') {
+		score += 1;
+		ate = true;
+	}
+
+	else if (obj == '#' && (curBoard[(int)temp.x][(int)temp.y] == '|' || curBoard[(int)temp.y][(int)temp.x] == '-' || curBoard[(int)temp.y][(int)temp.x] == '*')) {
+		//MessageBox(nullptr, TEXT(""), TEXT("food spawn out of bounds"), MB_OK);
 	}
 
 	else {
@@ -64,13 +72,15 @@ void Board::clearBoard() {
 }
 
 void Board::printBoard() {
+	//this->curBoard[20 + x][20] = "h";
 	for (int i = 0; i < 30; i++) {
 		for (int j = 0; j < 50; j++) {
 			cout << this->curBoard[i][j];
+			
 		}
-		cout << endl;
+		cout << "\n";
 	}
-	cout << endl;
+	cout << "\n";
 }
 
 void Board::updateBoard() {

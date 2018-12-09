@@ -28,6 +28,9 @@ public:
 	vec2 operator*(const vec2 a) const;
 	vec2 operator/(const vec2 a) const;
 
+	bool operator==(const vec2 a) const;
+
+
 	friend vec2 operator+(const float a, const vec2 b);
 	friend vec2 operator-(const float a, const vec2 b);
 };
