@@ -56,7 +56,7 @@ void askToQuit() {
 }
 
 void gameOver() {
-	exit(0);
+	game.deathScreen();
 }
 
 
@@ -66,7 +66,9 @@ int main() {
 	RECT r;
 	GetWindowRect(console, &r);
 	MoveWindow(console, r.left, r.top, 800, 600, TRUE); 
-	//Board gameBoard("test");
+	
+	game.startScreen();
+
 	int timer = 0;
 	int random = rand() % 45 + 20;
 
