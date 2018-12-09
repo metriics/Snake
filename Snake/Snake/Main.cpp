@@ -59,20 +59,16 @@ void gameOver() {
 	exit(0);
 }
 
-void input()
-{
-
-}
 
 int main() {
-	//int page = 0;
 	srand((int)time(0));
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r);
 	MoveWindow(console, r.left, r.top, 800, 600, TRUE); 
 	//Board gameBoard("test");
-
+	int timer = 0;
+	int random = rand() % 45 + 20;
 
 	while (playing)
 	{
@@ -81,7 +77,7 @@ int main() {
 		if (_kbhit())
 		{
 			c = 0;
-
+			
 			switch (c = _getch())
 			{
 			case KEY_UP:
@@ -117,9 +113,9 @@ int main() {
 			}
 
 		}
-		//Sleep(500);
-		//
-
+		timer++;
+		//std::cout << "Timer:" << timer << score << endl;
+		std::cout << "Disappears in: " << random - timer << endl;
 		game.ate = false;
 		
 		game.snake.prevPos = game.snake.pos;
@@ -155,11 +151,21 @@ int main() {
 		}
 		//
 
+	
+
 		game.placeOnBoard(game.snake.head, game.snake.pos);
 		if (game.ate == true) {
 			foodList[0] = Food();
 			game.snake.len += game.score;
 			score += game.score * 10;
+			timer = 0;
+			random = rand() % 45 + 20;
+		}
+
+		if (random == timer) {
+			foodList[0] = Food();
+			timer = 0;
+			random = rand() % 45 + 20;
 		}
 
 		for (int i = 0; i < game.snake.len; i++) {
